@@ -13,6 +13,7 @@ import re
 import requests
 import threading
 import time
+import sys
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from flask import Flask, jsonify, request, render_template
@@ -21,7 +22,7 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import func
 from werkzeug.middleware.proxy_fix import ProxyFix
 from dotenv import load_dotenv
-from telegram import Bot
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
 
 # Load environment variables
 load_dotenv()
@@ -340,7 +341,9 @@ class IVASMSScraper:
 
             soup = BeautifulSoup(response.content, 'html.parser')
             csrf_input = soup.find('input', {'name': '_token'})
-            csrf_token = csrf_input.get('value', '') if csrf_input else ''
+            csrf_token = ''
+            if csrf_input and hasattr(csrf_input, 'get'):
+                csrf_token = csrf_input.get('value', '')
 
             login_data = {
                 'email': self.email,
@@ -417,13 +420,24 @@ class TelegramOTPBot:
 
 
     async def send_otp_message(self, otp_data):
-        """Send OTP message to Telegram group"""
+        """Send OTP message to Telegram group with banner and buttons"""
         try:
+            banner_url = "https://files.catbox.moe/5h9f64.jpg"
             message = format_otp_message(otp_data)
-            await self.bot.send_message(
+            
+            keyboard = [
+                [InlineKeyboardButton("1️⃣ NUMBER CHANNEL", url="https://t.me/auroratechinc")],
+                [InlineKeyboardButton("2️⃣ OTP GROUP", url="https://t.me/auroraotp")],
+                [InlineKeyboardButton("3️⃣ DEVELOPER", url="https://t.me/jaden_afrix")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+
+            await self.bot.send_photo(
                 chat_id=self.group_id,
-                text=message,
-                parse_mode='HTML'
+                photo=banner_url,
+                caption=message,
+                parse_mode='HTML',
+                reply_markup=reply_markup
             )
             return True
         except Exception as e:
@@ -431,13 +445,24 @@ class TelegramOTPBot:
             return False
 
     async def send_multiple_otps(self, otp_list):
-        """Send multiple OTPs in a single message"""
+        """Send multiple OTPs in a single message with banner and buttons"""
         try:
+            banner_url = "https://files.catbox.moe/5h9f64.jpg"
             message = format_multiple_otps(otp_list)
-            await self.bot.send_message(
+            
+            keyboard = [
+                [InlineKeyboardButton("1️⃣ NUMBER CHANNEL", url="https://t.me/auroratechinc")],
+                [InlineKeyboardButton("2️⃣ OTP GROUP", url="https://t.me/auroraotp")],
+                [InlineKeyboardButton("3️⃣ DEVELOPER", url="https://t.me/jaden_afrix")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+
+            await self.bot.send_photo(
                 chat_id=self.group_id,
-                text=message,
-                parse_mode='HTML'
+                photo=banner_url,
+                caption=message,
+                parse_mode='HTML',
+                reply_markup=reply_markup
             )
             return True
         except Exception as e:
@@ -445,8 +470,9 @@ class TelegramOTPBot:
             return False
 
     async def send_test_message(self):
-        """Send a test message to verify bot functionality"""
+        """Send a test message with banner and buttons"""
         try:
+            banner_url = "https://files.catbox.moe/5h9f64.jpg"
             test_message = """🧪 <b>Test Message</b>
 
 This is a test message to verify that the Telegram OTP Bot is working correctly.
@@ -457,10 +483,19 @@ This is a test message to verify that the Telegram OTP Bot is working correctly.
 
 <i>Test completed successfully!</i>"""
             
-            await self.bot.send_message(
+            keyboard = [
+                [InlineKeyboardButton("1️⃣ NUMBER CHANNEL", url="https://t.me/auroratechinc")],
+                [InlineKeyboardButton("2️⃣ OTP GROUP", url="https://t.me/auroraotp")],
+                [InlineKeyboardButton("3️⃣ DEVELOPER", url="https://t.me/jaden_afrix")]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+
+            await self.bot.send_photo(
                 chat_id=self.group_id,
-                text=test_message,
-                parse_mode='HTML'
+                photo=banner_url,
+                caption=test_message,
+                parse_mode='HTML',
+                reply_markup=reply_markup
             )
             return True
         except Exception as e:
