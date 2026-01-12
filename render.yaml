@@ -7,7 +7,7 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
-      - key: IVAS_EMAIL
+      - key: IVASMS_EMAIL
         sync: false
       - key: IVASMS_PASSWORD
         sync: false
