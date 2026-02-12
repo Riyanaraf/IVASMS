@@ -1,0 +1,31 @@
+[Unit]
+Description=IVASMS Telegram Bot Service
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/opt/ivasms-bot
+EnvironmentFile=/opt/ivasms-bot/.env
+ExecStart=/usr/bin/python3 /opt/ivasms-bot/bot.py
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ivasms-bot
+Environment="PYTHONUNBUFFERED=1"
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ivasms-bot
+
+# Limits
+StartLimitBurst=5
+StartLimitIntervalSec=300
+
+[Install]
+WantedBy=multi-user.target
