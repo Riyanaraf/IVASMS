@@ -36,7 +36,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-ADMIN_IDS = [7500869913, 6524840104]
+ADMIN_IDS = [6715937373,6715937373]
 bot_users = set()
 
 class HealthHandler(BaseHTTPRequestHandler):
@@ -109,10 +109,10 @@ def get_random_headers():
 
 class IVASMSBot:
     def __init__(self):
-        self.email = os.getenv("IVASMS_EMAIL", "")
-        self.password = os.getenv("IVASMS_PASSWORD", "")
-        self.bot_token = os.getenv("BOT_TOKEN", "")
-        self.chat_id = os.getenv("CHAT_ID", "")
+        self.email = os.getenv("Riyanibneearafat@gmail.com", "")
+        self.password = os.getenv("Arko1627", "")
+        self.bot_token = os.getenv("8560175760:AAGzWPyLnrjbGWcXpi0DfZYQq2DvaFAd9iI", "")
+        self.chat_id = os.getenv("6715937373", "")
         self.session = requests.Session()
         self.driver = None
         self.consecutive_failures = 0
