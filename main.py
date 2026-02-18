@@ -15,10 +15,10 @@ import urllib.parse
 
 # Load environment variables
 load_dotenv()
-IVASMS_EMAIL = os.getenv("IVASMS_EMAIL")
-IVASMS_PASSWORD = os.getenv("IVASMS_PASSWORD")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID")
+IVASMS_EMAIL = os.getenv("riyanibneearafat@gmail.com")
+IVASMS_PASSWORD = os.getenv("Arko1627")
+BOT_TOKEN = os.getenv("8560175760:AAGzWPyLnrjbGWcXpi0DfZYQq2DvaFAd9iI")
+CHAT_ID = os.getenv("6715937373")
 
 # Common headers
 BASE_HEADERS = {
